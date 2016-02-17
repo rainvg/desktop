@@ -1,0 +1,38 @@
+{
+  "name": "desktop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.min.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha test/index.js",
+    "lint": "gulp lint",
+    "git-add": "git add .",
+    "git-commit": "git commit -m",
+    "commit": "gulp && npm run git-add && npm run git-commit",
+    "push": "git push origin master"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rainvg/desktop.git"
+  },
+  "keywords": [
+    "desktop",
+    "rain"
+  ],
+  "author": "rain.vg team (https://github.com/rainvg)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rainvg/desktop/issues"
+  },
+  "homepage": "https://github.com/rainvg/desktop#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-jshint": "^2.0.0",
+    "gulp-mocha": "^2.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.5.1",
+    "jshint": "^2.9.1",
+    "jshint-stylish": "^2.1.0",
+    "mocha": "^2.3.4"
+  }
+}
