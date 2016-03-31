@@ -39,6 +39,7 @@
     "mocha": "^2.3.4"
   },
   "dependencies": {
-    "potty": "git+https://github.com/rainvg/potty.git"
+    "potty": "git+https://github.com/rainvg/potty.git",
+    "proper-lockfile": "^1.1.2"
   }
 }
