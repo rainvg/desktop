@@ -27,7 +27,7 @@ locker.lock(rain_path.lockfile, function(error)
     process.exit();
   else
   {
-    pot = new potty(path.resolve(process.env.HOME || process.env.HOMEPATH, '.rain'), 'https://rain.vg/releases/desktop-daemon/' + os.type().toLowerCase() + '-' + os.arch().toLowerCase() + '/production/package', {ELECTRON_RUN_AS_NODE: false});
+    pot = new potty(path.resolve(process.env.HOME || process.env.HOMEPATH, '.rain'), 'https://rain.vg/releases/desktop-daemon/' + os.type().toLowerCase() + '-' + os.arch().toLowerCase() + '/production/package', {ELECTRON_RUN_AS_NODE: false, log: console.log});
 
     pot.on('shutdown', function()
     {
