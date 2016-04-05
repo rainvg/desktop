@@ -41,6 +41,6 @@
   },
   "dependencies": {
     "potty": "git+https://github.com/rainvg/potty.git",
-    "proper-lockfile": "^1.1.2"
+    "sheriff": "git+https://github.com/rainvg/sheriff.git"
   }
 }

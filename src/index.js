@@ -3,7 +3,7 @@ var potty = require('potty');
 var os = require('os');
 var fs = require('fs');
 var child_process = require('child_process');
-var locker = require('proper-lockfile');
+var sheriff = require('sheriff');
 
 var scheme = require('../package.json').scheme;
 
@@ -42,36 +42,30 @@ rain_path.log.file = path.resolve(rain_path.log.folder, __date__());
 if(!fs.existsSync(rain_path.root))
   fs.mkdirSync(rain_path.root);
 
-fs.openSync(rain_path.lockfile, 'w');
-locker.lock(rain_path.lockfile, function(error)
+sheriff.lock(rain_path.lockfile).then(function()
 {
-  if(error)
-    process.exit();
-  else
+  if(scheme === 'development')
   {
-    if(scheme === 'development')
+    if(!fs.existsSync(rain_path.log.folder))
+      fs.mkdirSync(rain_path.log.folder);
+
+    var __oldout__ = process.stdout.write;
+
+    process.stdout.write = function(data)
     {
-      if(!fs.existsSync(rain_path.log.folder))
-        fs.mkdirSync(rain_path.log.folder);
-
-      var __oldout__ = process.stdout.write;
-
-      process.stdout.write = function(data)
-      {
-        __oldout__.apply(this, arguments);
-        fs.appendFileSync(rain_path.log.file, data);
-      };
-    }
-
-    var pot = new potty(path.resolve(process.env.HOME || process.env.HOMEPATH, '.rain'), 'https://rain.vg/releases/desktop-daemon/' + os.type().toLowerCase() + '-' + os.arch().toLowerCase() + '/' + scheme + '/package', {ELECTRON_RUN_AS_NODE: false, log: console.log});
-
-    pot.on('shutdown', function()
-    {
-      process.exit();
-    });
-
-    pot.start();
+      __oldout__.apply(this, arguments);
+      fs.appendFileSync(rain_path.log.file, data);
+    };
   }
+
+  var pot = new potty(path.resolve(process.env.HOME || process.env.HOMEPATH, '.rain'), 'https://rain.vg/releases/desktop-daemon/' + os.type().toLowerCase() + '-' + os.arch().toLowerCase() + '/' + scheme + '/package', {ELECTRON_RUN_AS_NODE: false, log: console.log});
+
+  pot.on('shutdown', function()
+  {
+    process.exit();
+  });
+
+  pot.start();
 });
 
 process.once('SIGINT', function ()
