@@ -5,7 +5,9 @@ var fs = require('fs');
 var child_process = require('child_process');
 var sheriff = require('sheriff');
 
-var scheme = require('../package.json').scheme;
+var pkg = require('../package.json');
+var scheme = pkg.scheme;
+var version = pkg.version;
 
 if(!(process.env.ELECTRON_RUN_AS_NODE))
 {
@@ -64,7 +66,7 @@ else
       };
     }
 
-    var pot = new potty(path.resolve(process.env.HOME || process.env.HOMEPATH, '.rain'), 'https://rain.vg/releases/desktop-daemon/' + os.type().toLowerCase() + '-' + os.arch().toLowerCase() + '/' + scheme + '/package', {ELECTRON_RUN_AS_NODE: false, log: console.log});
+    var pot = new potty(path.resolve(process.env.HOME || process.env.HOMEPATH, '.rain'), 'https://rain.vg/releases/desktop-daemon/' + os.type().toLowerCase() + '-' + os.arch().toLowerCase() + '/' + scheme + '/package', {ELECTRON_RUN_AS_NODE: false, log: console.log, version: version});
 
     pot.on('shutdown', function()
     {
