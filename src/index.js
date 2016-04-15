@@ -5,6 +5,7 @@ var fs = require('fs');
 var sheriff = require('sheriff');
 var electron = require('electron');
 var date_format = require('dateformat');
+var genocide = require('genocide');
 
 var pkg = require('../package.json');
 
@@ -18,19 +19,25 @@ rain_path.log = {};
 rain_path.log.folder = path.resolve(rain_path.root, 'logs');
 rain_path.log.file = path.resolve(rain_path.log.folder, date_format(new Date(), 'yyyymmddHHMM', true));
 
-if(process.argv[2] === 'app')
+if(process.argv[1] === 'app')
 {
-  var app = new potty.app(path.resolve(process.env.HOME || process.env.HOMEPATH, '.rain', 'app'));
-
-  app.on('die', function()
+  try
   {
-    electron.app.exit(0);
-  });
+    var app = new potty.app(path.resolve(process.env.HOME || process.env.HOMEPATH, '.rain', 'app'));
 
-  electron.app.on('ready', function()
+    app.on('die', function()
+    {
+      genocide.seppuku();
+    });
+
+    electron.app.on('ready', function()
+    {
+      app.start();
+    });
+  } catch(error)
   {
-    app.start();
-  });
+    genocide.seppuku();
+  }
 }
 else
 {
@@ -53,7 +60,7 @@ else
       };
     }
 
-    var pot = new potty.pot(path.resolve(process.env.HOME || process.env.HOMEPATH, '.rain'), 'https://rain.vg/releases/desktop-daemon/' + os.type().toLowerCase() + '-' + os.arch().toLowerCase() + '/' + scheme + '/package', {command: process.argv[0], args: [__filename, 'app'], env: {ELECTRON_RUN_AS_NODE: undefined}}, {log: function()
+    var pot = new potty.pot(path.resolve(process.env.HOME || process.env.HOMEPATH, '.rain'), 'https://rain.vg/releases/desktop-daemon/' + os.type().toLowerCase() + '-' + os.arch().toLowerCase() + '/' + scheme + '/package', {command: process.argv[0], args: ['app'], env: {ELECTRON_RUN_AS_NODE: undefined}}, {log: function()
     {
       var args = Array.prototype.slice.call(arguments);
       args.unshift(date_format(new Date(), '[yyyy-mm-dd HH:MM:ss]', true));
