@@ -40,6 +40,7 @@
     "mocha": "^2.3.4"
   },
   "dependencies": {
+    "dateformat": "^1.0.12",
     "potty": "git+https://github.com/rainvg/potty.git",
     "sheriff": "git+https://github.com/rainvg/sheriff.git"
   }
