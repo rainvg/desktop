@@ -3,8 +3,7 @@
 var gulp  = require('gulp'),
     jshint = require('gulp-jshint'),
     uglify = require('gulp-uglify'),
-    mocha = require('gulp-mocha'),
-    rename = require('gulp-rename');
+    mocha = require('gulp-mocha'); // jshint ignore: line
 
 gulp.task('default', ['lint','test', 'minify'], function()
 {
@@ -17,7 +16,7 @@ gulp.task('lint', function()
 
 gulp.task('minify', ['lint', 'test'], function()
 {
-  return gulp.src('src/index.js').pipe(uglify()).pipe(rename({suffix: '.min'})).pipe(gulp.dest('dist'));
+  return gulp.src('src/index.js').pipe(uglify()).pipe(gulp.dest('dist'));
 });
 
 gulp.task('test', ['lint'], function()

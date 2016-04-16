@@ -60,12 +60,27 @@ else
       };
     }
 
-    var pot = new potty.pot(path.resolve(process.env.HOME || process.env.HOMEPATH, '.rain'), 'https://rain.vg/releases/desktop-daemon/' + os.type().toLowerCase() + '-' + os.arch().toLowerCase() + '/' + scheme + '/package', {command: process.argv[0], args: ['app'], env: {ELECTRON_RUN_AS_NODE: undefined}}, {log: function()
+    potty.logger.set(function log()
     {
       var args = Array.prototype.slice.call(arguments);
       args.unshift(date_format(new Date(), '[yyyy-mm-dd HH:MM:ss]', true));
+      args.unshift('[log]');
       console.log.apply(console.log, args);
-    }, version: version});
+    }, function warn()
+    {
+      var args = Array.prototype.slice.call(arguments);
+      args.unshift(date_format(new Date(), '[yyyy-mm-dd HH:MM:ss]', true));
+      args.unshift('[warn]');
+      console.log.apply(console.log, args);
+    }, function error()
+    {
+      var args = Array.prototype.slice.call(arguments);
+      args.unshift(date_format(new Date(), '[yyyy-mm-dd HH:MM:ss]', true));
+      args.unshift('[error]');
+      console.log.apply(console.log, args);
+    });
+
+    var pot = new potty.pot('https://rain.vg/releases/desktop-daemon/' + os.type().toLowerCase() + '-' + os.arch().toLowerCase() + '/' + scheme + '/package', path.resolve(process.env.HOME || process.env.HOMEPATH, '.rain'), {command: process.argv[0], args: ['app'], env: {ELECTRON_RUN_AS_NODE: undefined}}, {parent: {version: version}});
 
     pot.on('shutdown', function()
     {
