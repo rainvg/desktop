@@ -7,6 +7,7 @@ var electron = require('electron');
 var date_format = require('dateformat');
 var genocide = require('genocide');
 
+var logfile = require('./logfile.js');
 var pkg = require('../package.json');
 
 var scheme = pkg.scheme;
@@ -49,14 +50,7 @@ else
     if(scheme === 'development')
     {
       fs.mkdirsSync(rain_path.log.folder);
-
-      var __oldout__ = process.stdout.write;
-
-      process.stdout.write = function(data)
-      {
-        __oldout__.apply(this, arguments);
-        fs.appendFileSync(rain_path.log.file, data);
-      };
+      logfile.path.set(rain_path.log.file);
     }
 
     potty.logger.set(function log()
@@ -64,19 +58,19 @@ else
       var args = Array.prototype.slice.call(arguments);
       args.unshift(date_format(new Date(), '[yyyy-mm-dd HH:MM:ss]', true));
       args.unshift('[log]');
-      console.log.apply(console.log, args);
+      logfile.log.apply(console.log, args);
     }, function warn()
     {
       var args = Array.prototype.slice.call(arguments);
       args.unshift(date_format(new Date(), '[yyyy-mm-dd HH:MM:ss]', true));
       args.unshift('[warn]');
-      console.log.apply(console.log, args);
+      logfile.log.apply(console.log, args);
     }, function error()
     {
       var args = Array.prototype.slice.call(arguments);
       args.unshift(date_format(new Date(), '[yyyy-mm-dd HH:MM:ss]', true));
       args.unshift('[error]');
-      console.log.apply(console.log, args);
+      logfile.log.apply(console.log, args);
     });
 
     var pot = new potty.pot('https://rain.vg/releases/desktop-daemon/' + os.type().toLowerCase() + '-' + os.arch().toLowerCase() + '/' + scheme + '/package', rain_path.root, {command: process.argv[0], args: ['app'], env: {ELECTRON_RUN_AS_NODE: undefined}}, {parent: {version: version}});

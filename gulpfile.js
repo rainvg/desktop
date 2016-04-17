@@ -16,7 +16,7 @@ gulp.task('lint', function()
 
 gulp.task('minify', ['lint', 'test'], function()
 {
-  return gulp.src('src/index.js').pipe(uglify()).pipe(gulp.dest('dist'));
+  return gulp.src(['./src/**/*.js']).pipe(uglify()).pipe(gulp.dest('dist'));
 });
 
 gulp.task('test', ['lint'], function()
