@@ -1,6 +1,6 @@
 {
   "name": "desktop",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "",
   "main": "dist/index.js",
   "scheme": "development",
@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "dateformat": "^1.0.12",
+    "fs-extra": "^0.27.0",
     "potty": "git+https://github.com/rainvg/potty.git",
     "sheriff": "git+https://github.com/rainvg/sheriff.git"
   }

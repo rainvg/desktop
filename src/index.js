@@ -1,7 +1,7 @@
 var path = require('path');
 var potty = require('potty');
 var os = require('os');
-var fs = require('fs');
+var fs = require('fs-extra');
 var sheriff = require('sheriff');
 var electron = require('electron');
 var date_format = require('dateformat');
@@ -41,15 +41,13 @@ if(process.argv[1] === 'app')
 }
 else
 {
-  if(!fs.existsSync(rain_path.root))
-    fs.mkdirSync(rain_path.root);
+  fs.mkdirsSync(rain_path.root);
 
   sheriff.lock(rain_path.lockfile).then(function()
   {
     if(scheme === 'development')
     {
-      if(!fs.existsSync(rain_path.log.folder))
-        fs.mkdirSync(rain_path.log.folder);
+      fs.mkdirsSync(rain_path.log.folder);
 
       var __oldout__ = process.stdout.write;
 
