@@ -3,7 +3,7 @@
   "version": "2.1.2",
   "description": "",
   "main": "dist/index.js",
-  "scheme": "development",
+  "scheme": "buggy",
   "scripts": {
     "test": "./node_modules/.bin/mocha test/index.js",
     "lint": "gulp lint",
