@@ -47,7 +47,7 @@ else
 
   sheriff.lock(rain_path.lockfile).then(function()
   {
-    if(scheme === 'development')
+    if(scheme === 'development' || scheme === 'buggy')
     {
       fs.mkdirsSync(rain_path.log.folder);
       logfile.path.set(rain_path.log.file);
