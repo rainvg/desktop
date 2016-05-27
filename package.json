@@ -41,6 +41,7 @@
   "dependencies": {
     "dateformat": "^1.0.12",
     "fs-extra": "^0.27.0",
+    "genocide": "git+https://github.com/rainvg/genocide.git",
     "potty": "git+https://github.com/rainvg/potty.git",
     "sheriff": "git+https://github.com/rainvg/sheriff.git"
   }
