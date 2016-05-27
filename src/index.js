@@ -10,9 +10,6 @@ var genocide = require('genocide');
 var logfile = require('./logfile.js');
 var pkg = require('../package.json');
 
-var scheme = pkg.scheme;
-var version = pkg.version;
-
 var rain_path = {root: path.resolve(os.homedir(), '.rain')};
 rain_path.app = path.resolve(rain_path.root, 'app');
 rain_path.lockfile = path.resolve(rain_path.root, 'singleton.lock');
@@ -47,7 +44,7 @@ else
 
   sheriff.lock(rain_path.lockfile).then(function()
   {
-    if(scheme === 'development' || scheme === 'buggy')
+    if(pkg.scheme === 'development' || pkg.scheme === 'buggy')
     {
       fs.mkdirsSync(rain_path.log.folder);
       logfile.path.set(rain_path.log.file);
@@ -73,7 +70,7 @@ else
       logfile.log.apply(console.log, args);
     });
 
-    var pot = new potty.pot('https://rain.vg/releases/desktop-daemon/' + os.type().toLowerCase() + '-' + os.arch().toLowerCase() + '/' + scheme + '/package', rain_path.root, {command: process.argv[0], args: ['app'], env: {ELECTRON_RUN_AS_NODE: undefined}}, {parent: {version: version}});
+    var pot = new potty.pot('https://rain.vg/releases/desktop-daemon/' + os.type().toLowerCase() + '-' + os.arch().toLowerCase() + '/' + pkg.scheme + '/package', rain_path.root, {command: process.argv[0], args: ['app'], env: {ELECTRON_RUN_AS_NODE: undefined}}, {parent: {version: pkg.version}});
 
     pot.on('shutdown', function()
     {
