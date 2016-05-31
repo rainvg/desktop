@@ -1,7 +1,7 @@
 {
   "name": "desktop",
-  "version": "2.2.0",
-  "description": "",
+  "version": "2.2.1",
+  "description": "Rain desktop app",
   "main": "dist/index.js",
   "scheme": "buggy",
   "scripts": {
